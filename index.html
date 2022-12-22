@@ -36,21 +36,20 @@
       </div>
     </section>
     <section class="u-clearfix u-section-2" id="sec-7510">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-align-center u-clearfix u-layout-custom-sm u-layout-custom-xs u-layout-wrap u-layout-wrap-1">
+      <div class="u-clearfix u-sheet u-valign-middle-xs u-sheet-1">
+        <div class="u-align-center u-clearfix u-expanded-width-xs u-layout-custom-sm u-layout-custom-xs u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
             <div class="u-layout-row">
-              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
-                <div class="u-container-layout u-valign-middle u-container-layout-2">
-                  <p class="u-align-center u-text u-text-default u-text-2">
-				  <span class="u-file-icon u-icon u-icon-1"><img src="images/482216.png" alt=""></span>&nbsp;paper
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <p class="u-align-center u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-1"><span class="u-file-icon u-icon u-icon-1"><img src="images/482216.png" alt=""></span>&nbsp;paper
                   </p>
                 </div>
               </div>
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
-                <div class="u-container-layout u-valign-middle u-container-layout-2">
-                  <p class="u-align-center u-text u-text-default u-text-2">
-                    <a class="u-active-none u-border-none " href="https://github.com/AIRI-Institute/TransPath"><span class="u-file-icon u-icon u-icon-2"><img src="images/2111432.png" alt=""></span>&nbsp;code
+                <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-container-layout-2">
+                  <p class="u-align-center u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-2">
+                    <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-body-color u-btn-1" href="https://github.com/AIRI-Institute/TransPath"><span class="u-file-icon u-icon u-icon-2"><img src="images/2111432.png" alt=""></span>&nbsp;code
                     </a>
                   </p>
                 </div>
@@ -93,16 +92,16 @@ trained using different supervision). The heuristic search algorithm is also dif
         <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
             <div class="u-layout-row">
-              <div class="u-container-style u-layout-cell u-size-39 u-layout-cell-1">
+              <div class="u-container-style u-layout-cell u-size-33-md u-size-33-sm u-size-33-xs u-size-39-lg u-size-39-xl u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
                   <h4 class="u-text u-text-1"> Heuristics learned</h4>
-                  <p class="u-align-justify u-text u-text-default u-text-2">The first type of the heuristic is the&nbsp;<span style="font-style: italic;">correction factor <span style="font-style: normal;">(</span>cf<span style="font-style: normal;">)</span>
+                  <p class="u-align-justify u-text u-text-default-lg u-text-default-xl u-text-2">The first type of the heuristic is the&nbsp;<span style="font-style: italic;">correction factor <span style="font-style: normal;">(</span>cf<span style="font-style: normal;">)</span>
                     </span>, which is defined as the ratio of the value of the available instance-independent heuristicto the value of the perfect heuristic:&nbsp;<span style="font-style: italic;">cf(n) = h(n)/h*(n)</span>.&nbsp;We suggest plugging the predicted cf-values to the WA* algorithm as shown in Alg. 1 (black + blue code fragments). I.e., the&nbsp;f-value of each node is computed as&nbsp;<span style="font-style: italic;">f(n) = g(n) + h(n)/cf(n)</span>. This can be though of as running WA* that uses individual weights for different search nodes instead of a single constant weight. As there is no theoretical bound on the error of predicting&nbsp;<span style="font-style: italic;">cf</span>-values by the neural network, the resultant search algorithm provides no guarantees on cost of the solution.&nbsp;<br>
                     <br>The second suggested heuristic is originally intended to serve as the secondary heuristic for the Focal Search algorithm, <span style="font-style: italic;">h<span style="font-style: normal;"><sub>FOCAL</sub>, which is tailored to solve the BSP-PROBLEM. Intuitively, we want from <span style="font-style: italic;">h<span style="font-style: normal;"><sub>FOCAL</sub> to discriminate between the nodes that are likely to yield rapid progress toward the goal and the nodes that are not. To this end, we suggest assigning (and learning to predict) a value to each grid cell that tells us how likely it is that this cell is lying on the shortest path between start and goal.
                   </p>
                 </div>
               </div>
-              <div class="u-container-align-center u-container-style u-image u-image-contain u-layout-cell u-size-21 u-image-1" data-image-width="788" data-image-height="1062">
+              <div class="u-container-align-center u-container-style u-image u-image-contain u-layout-cell u-size-21-lg u-size-21-xl u-size-27-md u-size-27-sm u-size-27-xs u-image-1" data-image-width="788" data-image-height="1062">
                 <div class="u-container-layout u-container-layout-2"></div>
               </div>
             </div>
@@ -112,7 +111,7 @@ trained using different supervision). The heuristic search algorithm is also dif
     </section>
     <section class="u-clearfix u-section-7" id="sec-c5ef">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <h4 class="u-text u-text-default u-text-1"> Neural network architecture</h4>
+        <h4 class="u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-1"> Neural network architecture</h4>
         <p class="u-align-justify u-text u-text-default u-text-2">The neural network for learning <span style="font-style: italic;">cf</span>-values and <span style="font-style: italic;">pp</span>-values has
 the same architecture, however the input is slightly different.
 For <span style="font-style: italic;">pp</span>-values the input contains the grid, represented as a
