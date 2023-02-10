@@ -18,8 +18,8 @@
 }
 
 .u-section-2 .u-layout-wrap-1 {
-  width: 367px;
-  margin: 0 auto 22px;
+  width: 450px;
+  margin: auto auto auto;
 }
 
 .u-section-2 .u-layout-cell-1 {
@@ -27,14 +27,14 @@
 }
 
 .u-section-2 .u-container-layout-1 {
-  padding: 12px 30px 10px;
+  padding: 11px 30px;
 }
 
 .u-section-2 .u-text-1 {
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
-  margin: auto auto 0;
+  margin: auto auto auto;
 }
 
 .u-section-2 .u-icon-1 {
@@ -54,7 +54,7 @@
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
-  margin: 0 auto;
+  margin: auto auto auto;
 }
 
 .u-section-2 .u-btn-1 {
