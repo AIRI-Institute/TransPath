@@ -1,3 +1,8 @@
+html,body        {height: 100%;}
+.wrapper         {width: 60%; max-width: 2000px; height: 100%; margin: 0 auto; background: #CCC}
+.h_iframe        {position: relative; padding-top: 56%;}
+.h_iframe iframe {position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+
 .u-section-1 .u-sheet-1 {
   min-height: 177px;
 }
@@ -135,6 +140,7 @@
     width: 68px;
   }
 }.u-section-3 .u-sheet-1 {
+    margin-top: 20px;
   min-height: 494px;
 }
 
