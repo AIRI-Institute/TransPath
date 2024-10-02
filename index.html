@@ -1,12 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html style="font-size: 16px;" lang="ru"><head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=https://cognitive-ai-systems.github.io/TransPath/">
-    <title>Redirecting...</title>
-</head>
-<body>
-    <p>If you are not redirected automatically, follow this <a href="https://cognitive-ai-systems.github.io/TransPath/">link</a>.</p>
-</body>
-</html>
+    <meta charset="utf-8">
+    <meta name="keywords" content="​TransPath: Learning Heuristics For Grid-Based Pathfinding via Transformers, Overview, Method">
+    <meta name="description" content="">
+    <title>TransPath: Learning Heuristics For Grid-Based Pathfinding via Transformers</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="main.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "AIRI",
+		"logo": "images/AIRI-Fulllogo2.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="main">
+    <meta property="og:type" content="website">
+  </head>
+  <body class="u-body u-xl-mode"><header class="u-clearfix u-header u-header" id="sec-1e54"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="https://airi.net" class="u-image u-logo u-image-1" data-image-width="1380" data-image-height="420">
+          <img src="images/AIRI-Fulllogo2.png" class="u-logo-image u-logo-image-1">
+        </a>
+        <h2 class="u-align-center u-text u-text-1"> TransPath: Learning Heuristics For Grid-Based Pathfinding via Transformers</h2>
+      </div></header>
+    <section class="u-clearfix u-section-1" id="sec-d3ac">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h5 class="u-align-center u-text u-text-default u-text-1">Daniil Kirilenko<sup>1</sup>, Anton Andreychuk<sup>2</sup>, Aleksandr Panov<sup>1,2</sup>, Konstantin Yakovlev<sup>1,2</sup></h5>
+        <h6 class="u-align-center u-text u-text-default u-text-2"><sup>1</sup>Federal Research Center for Computer Science and Control of Russian Academy of Sciences, Moscow, Russia<br><sup>2</sup> AIRI, Moscow, Russia
+        </h6>
+        <h6 class="u-align-center u-text u-text-default u-text-3"> <a href="mailto:anedanman@gmail.com">anedanman@gmail.com</a>, <a href="mailto:andreychuk@airi.net">andreychuk@airi.net</a>, <a href="mailto:panov@airi.net">panov@airi.net</a>, <a href="mailto:yakovlev@isa.ru">yakovlev@isa.ru</a></h6>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-2" id="sec-7510">
+      <div class="u-clearfix u-sheet u-valign-middle-xs u-sheet-1">
+        <div class="u-align-center u-clearfix u-expanded-width-xs u-layout-custom-sm u-layout-custom-xs u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <p class="u-align-center u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-1">
+					<a href="http://arxiv.org/abs/2212.11730"><span class="u-file-icon u-icon u-icon-1"><img src="images/482216.png" alt=""></span>&nbsp;paper
+					</a>
+				  </p>
+                <p class="u-align-center u-text u-text-1">
+					<a href="https://github.com/AIRI-Institute/TransPath/blob/github-io/transpath_poster.pdf"><span class="u-file-icon u-icon u-icon-1"><img src="images/482216.png" alt=""></span>&nbsp;poster
+					</a>
+				</p>
+              <p class="u-align-center u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-1">
+                    <a href="https://github.com/AIRI-Institute/TransPath"><span class="u-file-icon u-icon u-icon-2"><img src="images/2111432.png" alt=""></span>&nbsp;code
+                    </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix">
+	<div class="wrapper u-align-center">
+		<div class="h_iframe">
+			<iframe src="https://www.youtube.com/embed/cbz-g5IGN8c" title="TransPath AAAI2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+		</div>
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-section-3" id="sec-e507">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-align-center u-text u-text-1">Overview</h2>
+        <p class="u-align-justify u-text u-text-2"> Heuristic search algorithms, e.g. A*, are the commonly used tools for pathfinding on grids, i.e. graphs of regular structure that are widely employed to represent environments in robotics, video games etc. Instance-independent heuristics for grid graphs, e.g. Manhattan distance, do not take the obstacles into account and, thus, the search led by such heuristics performs poorly in the obstacle-rich environments. To this end, we suggest learning the instance-dependent heuristic proxies that are supposed to notably increase the efficiency of the search. The first heuristic proxy we suggest to learn is the correction factor, i.e. the ratio between the instance independent cost-to-go estimate and the perfect one (computed offline at the training phase). Unlike learning the absolute values of the cost-to-go heuristic function, which was known before, when learning the correction factor the knowledge of the instance-independent heuristic is utilized. The second heuristic proxy is the path probability, which indicates how likely the grid cell is lying on the shortest path. This heuristic can be utilized in the Focal Search framework as the secondary heuristic, allowing us to preserve the guarantees on the bounded sub-optimality of the solution. We learn both suggested heuristics in a supervised fashion with the state-of-the-art neural networks containing attention blocks (transformers). We conduct a thorough empirical evaluation on a comprehensive dataset of planning tasks, showing that the suggested techniques i) reduce the computational effort of the A* up to a factor of 4x while producing the solutions, which costs exceed the costs of the optimal solutions by less than 0.3% on average; ii) outperform the competitors, which include the conventional techniques from the heuristic search, i.e. weighted A*, as well as the state-of-the-art learnable planners.</p>
+      </div>
+    </section>
+    <section class="u-clearfix u-container-align-center u-image u-image-contain u-lightbox u-section-4" id="sec-7733" data-image-width="1978" data-image-height="512">
+      <div class="u-clearfix u-sheet u-sheet-1"></div>
+    </section>
+    <section class="u-align-center u-clearfix u-section-5" id="sec-1f9c">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-1">Method</h2>
+        <p class="u-align-justify u-text u-text-2"> In this work we are interested in two variants of the pathfinding problem. The first variant asks to find a valid path on a
+grid, without specifying any constraints on the cost of the
+path, VP-PROBLEM. The second variant assumes that a suboptimality bound, w ≥ 1, is specified and the task is to find
+a path whose cost does not exceed the cost of the optimal
+path by more than a factor of w, BSP-PROBLEM.
+The solvers that we suggest for both problems share their
+structure. Each of them is composed of the two building
+blocks. First, a deep neural network is used to process the
+input grid and to predict the values of the heuristic function
+that will be used later. Second, a heuristic search algorithm
+is invoked that utilizes the heuristic data from the neural network. The neural network used for VP-PROBLEM and BSPPROBLEM has the same architecture; however, in each case,
+the output heuristic is different (as the neural network was
+trained using different supervision). The heuristic search algorithm is also different. For solving VP-PROBLEM, we utilize WA*, while for BSP-PROBLEM – Focal Search (FS).<br>
+        </p>
+      </div>
+    </section>
+    <section class="u-align-left u-clearfix u-section-6" id="sec-74df">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-size-33-md u-size-33-sm u-size-33-xs u-size-39-lg u-size-39-xl u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <h4 class="u-text u-text-1"> Heuristics learned</h4>
+                  <p class="u-align-justify u-text u-text-default-lg u-text-default-xl u-text-2">The first type of the heuristic is the&nbsp;<span style="font-style: italic;">correction factor <span style="font-style: normal;">(</span>cf<span style="font-style: normal;">)</span>
+                    </span>, which is defined as the ratio of the value of the available instance-independent heuristicto the value of the perfect heuristic:&nbsp;<span style="font-style: italic;">cf(n) = h(n)/h*(n)</span>.&nbsp;We suggest plugging the predicted cf-values to the WA* algorithm as shown in Alg. 1 (black + blue code fragments). I.e., the&nbsp;f-value of each node is computed as&nbsp;<span style="font-style: italic;">f(n) = g(n) + h(n)/cf(n)</span>. This can be though of as running WA* that uses individual weights for different search nodes instead of a single constant weight. As there is no theoretical bound on the error of predicting&nbsp;<span style="font-style: italic;">cf</span>-values by the neural network, the resultant search algorithm provides no guarantees on cost of the solution.&nbsp;<br>
+                    <br>The second suggested heuristic is originally intended to serve as the secondary heuristic for the Focal Search algorithm, <span style="font-style: italic;">h<span style="font-style: normal;"><sub>FOCAL</sub>, which is tailored to solve the BSP-PROBLEM. Intuitively, we want from <span style="font-style: italic;">h<span style="font-style: normal;"><sub>FOCAL</sub> to discriminate between the nodes that are likely to yield rapid progress toward the goal and the nodes that are not. To this end, we suggest assigning (and learning to predict) a value to each grid cell that tells us how likely it is that this cell is lying on the shortest path between start and goal.
+                  </p>
+                </div>
+              </div>
+              <div class="u-container-align-center u-container-style u-image u-image-contain u-layout-cell u-size-21-lg u-size-21-xl u-size-27-md u-size-27-sm u-size-27-xs u-image-1" data-image-width="788" data-image-height="1062">
+                <div class="u-container-layout u-container-layout-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-7" id="sec-c5ef">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-1"> Neural network architecture</h4>
+        <p class="u-align-justify u-text u-text-default u-text-2">The neural network for learning <span style="font-style: italic;">cf</span>-values and <span style="font-style: italic;">pp</span>-values has
+the same architecture, however the input is slightly different.
+For <span style="font-style: italic;">pp</span>-values the input contains the grid, represented as a
+binary image and the start-goal matrix, which has the same
+size as the grid and contains the values of 1 only for start
+and goal, while all other pixels are zeroes. For cf-values this
+matrix contains only one non-zero element – the goal one.<br>
+          <br>The following figure depicts the suggested neural network architecture: a) Design of the whole model. CNN-encoder is used to produce local
+features which are further fed into the transformer blocks to catch the long-range dependencies between the features. The
+resulting representation is passed through the CNN-decoder to produce output values. b) Architecture of the ResNet block. c)
+Architecture of the Transformer block.
+        </p>
+      </div>
+    </section>
+    <section class="u-clearfix u-container-align-center u-image u-image-contain u-section-8" id="sec-4944" data-image-width="1920" data-image-height="626">
+      <div class="u-clearfix u-sheet u-sheet-1"></div>
+    </section>
+    <section class="u-clearfix u-section-9" id="sec-300f">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-align-center u-text u-text-default u-text-1">Examples</h2>
+        <p class="u-align-justify u-text u-text-default u-text-2">The following figure shows some examples of how looks the predicted matrices, obtained from the neural network, how the suggested approaches works, as well as the work of other baseline approaches. Black cells are the obstacles, red cells correspond to the found trajectories, green cells correspond to the nodes that were expanded by the algorithm during the search process.<br>
+          <br>
+        </p>
+      </div>
+    </section>
+    <section class="u-clearfix u-container-align-center u-image u-image-contain u-section-10" id="sec-1a6f" data-image-width="1712" data-image-height="1080">
+      <div class="u-clearfix u-sheet u-sheet-1"></div>
+    </section>
+    <section class="u-clearfix u-section-11" id="sec-b91f">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-align-center u-text u-text-default u-text-1">Citation</h2>
+        <p class="u-align-center u-text u-text-default u-text-2">Kirilenko, D., Andreychuk, A., Panov, A. and Yakovlev, K. 2023. TransPath: Learning Heuristics for Grid-Based Pathfinding via Transformers. Proceedings of the AAAI Conference on Artificial Intelligence. 37, 10 (Jun. 2023), 12436-12443. DOI:https://doi.org/10.1609/aaai.v37i10.26465.</p>
+      </div>
+    </section>
+    
+    
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-06fe"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">© 2022, <a href="https://airi.net/">AIRI</a></p>
+      </div></footer>
+  
+</body></html>
